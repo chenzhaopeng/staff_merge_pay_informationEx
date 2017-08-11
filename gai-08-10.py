@@ -242,10 +242,11 @@ def find_first_td_div(current_div):
     while current_div and max_search_range != 0:
         # print(current_div.get_text() + "//")
         current_div_class = current_div['class']
-
+        #找到了表格的入口，又或者是找到了class= t但内容是项目，同样是入口
         if current_div_class[0] == 'c':
             first_td_div = current_div
             break
+        
         if (current_div_class[0] == 't' and len(re.findall(r'项目',current_div.get_text())) > 0):
             first_td_div = current_div
             break
@@ -266,13 +267,15 @@ def build_original_table(current_td_div):
     pre_div = current_td_div
     while current_td_div:
         begin_tag = 1
-
+        #其中，假如有合计了之后还有汉字，直接break
         if (refinish_tag == 1 and len(re.findall(r'[\u4e00-\u9fa5]+', current_td_div.get_text())) > 0):
             break
         if refinish_tag == 0 and len(re.findall(r'合\s*计|小\s*计', current_td_div.get_text())) > 0:
             refinish_tag = 1
         pre_div_class = pre_div['class']
         current_td_div_class = current_td_div['class']
+        
+        #关键的一步，把表格中的空白项用0表示，只有连续两个class都是C的时候成立
         if current_td_div_class[0] == 'c' and pre_div_class[0] == 'c':#c表示该项为表格项
             # print("跑过吗 ")
             contend = current_td_div.get_text()
