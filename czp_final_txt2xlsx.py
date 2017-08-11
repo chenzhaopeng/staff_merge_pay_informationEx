@@ -49,10 +49,12 @@ def is_bigger(str1,str2):
     new_str1=str1.replace(',', '')
     new_str1=new_str1.replace('，', '')
     new_str1=new_str1.replace('.', '')
+    new_str1 = new_str1.replace('','')
     int1 = int(new_str1)
     new_str2=str2.replace(',', '')
     new_str2=new_str2.replace('，', '')
     new_str2=new_str2.replace('.', '')
+    new_str2 = new_str2.replace('', '')
     int2 = int(new_str2)
     return int1-int2
 
@@ -190,7 +192,7 @@ for txtname in filearray:
         #     lots_of_number_file.write(company_list[i])
 
         #找出所有的 字 数 数 的情况,加入list
-        patten_list = re.findall(r"([\u4e00-\u9fff|:|：]+|合\s*计|销\s*售\s*费\s*用|[\u4e00-\u9fff]+\s\s?[\u4e00-\u9fff]+)\s+([0-9|,|.|\(|\)|\（|\）|．|，]{3,})\s+([0-9|,|.|\(|\)|\（|\）|．|，]+)",company_list[i])
+        patten_list = re.findall(r"([\u4e00-\u9fff|:|：]+|合\s*计|销\s*售\s*费\s*用|[\u4e00-\u9fff]+\s\s?[\u4e00-\u9fff]+)\s+([0-9|,|.|\(|\)|\（|\）|．|，]{3,})\s+([0-9|,|.|\(|\)|\（|\）|．|，]{2，})",company_list[i])
 
         #找出所有的  字 数 字   的情况,其中  数字的值要大于五位数,可区分好多年份等单独数字
         only_one_condition_list = re.findall(r"([\u4e00-\u9fff|-]+)\s+([0-9|,|.]{5,})\s+(?=[\u4e00-\u9fff|-]+)",company_list[i])
