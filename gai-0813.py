@@ -597,7 +597,10 @@ def find_the_current_div_else_inEX(html_filename):
         start_count = 0
         longest_count = 0
         while temp_div:
-            if len(re.findall(r'.*应付职工薪酬列示|应付职工薪酬|应付职工薪酬情况|应付职工薪酬|应付职工薪酬分类\b',temp_div.get_text())) > 0 and has_all_table == 0:
+            if len(re.findall(r'.*应付职工薪酬|应付职工薪酬情况|应付职工薪酬|应付职工薪酬分类|应付职工薪酬列示[：|:]?\b',temp_div.get_text())) > 0 and has_all_table == 0:
+                if len(re.findall(r'长期',temp_div.get_text())) > 0:
+                    temp_div = temp_div.find_next_sibling('div', class_='t')
+                    continue
                 paging_tag = 0
                 current_div = temp_div
                 has_all_table = 1
@@ -676,7 +679,7 @@ def staff_pay_information_extract(html_filename):
                 if paging_tag == 1:
                     temp_div = now_current_div
                 while temp_div:
-                    if len(re.findall(r'.*应付职工薪酬列示|应付职工薪酬|应付职工薪酬情况|应付职工薪酬|应付职工薪酬分类\b',
+                    if len(re.findall(r'.*应付职工薪酬|应付职工薪酬情况|应付职工薪酬|应付职工薪酬分类|应付职工薪酬列示[：|:]?\b',
                                       temp_div.get_text())) > 0 and has_all_table == 0:
                         paging_tag = 0
                         current_div = temp_div
